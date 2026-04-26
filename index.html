@@ -3,22 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uy-bot | 專業 Discord 伺服器管理</title>
+    <title>Uy-bot | 專業 Discord 機器人</title>
     <style>
         :root {
-            --primary-color: #5865F2;
-            --bg-dark: #0F1113;
-            --card-bg: #18191C;
-            --text-main: #FFFFFF;
-            --text-muted: #B5BAC1;
+            --primary: #5865F2;
+            --bg: #0F1113;
+            --card: #18191C;
+            --text: #FFFFFF;
+            --muted: #B5BAC1;
         }
 
-        body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            margin: 0;
-            line-height: 1.6;
+        * { box-sizing: border-box; }
+        body { 
+            font-family: 'Inter', -apple-system, sans-serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            margin: 0; 
+            scroll-behavior: smooth; 
         }
 
         /* 導覽列 */
@@ -26,115 +27,157 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 10%;
-            background: rgba(0,0,0,0.3);
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            padding: 0 10%;
+            height: 70px;
+            background: rgba(15, 17, 19, 0.95);
+            position: fixed;
+            top: 0; width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid #2e2f34;
         }
 
-        .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary-color); }
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary); text-decoration: none; }
 
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            margin-left: 25px;
-            transition: 0.3s;
+        .nav-links { display: flex; list-style: none; gap: 30px; }
+        .nav-links a { color: var(--text); text-decoration: none; font-weight: 500; transition: 0.3s; }
+        
+        /* 下拉選單 */
+        .dropdown { position: relative; }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: var(--card);
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+            border-radius: 8px;
+            top: 100%;
+            padding: 10px 0;
+            border: 1px solid #2e2f34;
         }
+        .dropdown-content a {
+            padding: 12px 20px;
+            display: block;
+            font-size: 0.9rem;
+        }
+        .dropdown-content a:hover { background: #2e2f34; color: var(--primary); }
+        .dropdown:hover .dropdown-content { display: block; }
 
-        .nav-links a:hover { color: #fff; }
-
-        /* 主視覺區 (Hero) */
+        /* 主視覺 */
         .hero {
-            padding: 100px 10% 80px;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             text-align: center;
-            background: radial-gradient(circle at center, rgba(88,101,242,0.1) 0%, transparent 70%);
+            padding: 0 20px;
         }
+        .hero h1 { font-size: 4rem; margin-bottom: 10px; }
+        .hero p { color: var(--muted); font-size: 1.2rem; margin-bottom: 30px; }
 
-        .hero h1 { font-size: 4rem; margin-bottom: 20px; }
-        .hero p { font-size: 1.2rem; color: var(--text-muted); max-width: 700px; margin: 0 auto 40px; }
+        /* 功能介紹區塊 */
+        .section { padding: 100px 15%; }
+        .section h2 { font-size: 2.5rem; color: var(--primary); margin-bottom: 40px; border-bottom: 2px solid #2e2f34; padding-bottom: 10px; }
+        
+        .cmd-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .cmd-box {
+            background: var(--card);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #2e2f34;
+        }
+        .cmd-box strong { color: var(--primary); font-family: monospace; font-size: 1.1rem; display: block; margin-bottom: 8px; }
+        .cmd-box span { color: var(--muted); font-size: 0.9rem; }
 
-        .btn-main {
-            background: var(--primary-color);
+        /* 按鈕 */
+        .btn {
+            background: var(--primary);
             color: white;
             padding: 15px 40px;
             border-radius: 8px;
             text-decoration: none;
             font-weight: bold;
-            font-size: 1.1rem;
-            transition: 0.3s;
-            display: inline-block;
         }
 
-        .btn-main:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(88,101,242,0.3); }
-
-        /* 功能特點區 (Features) */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            padding: 60px 10%;
-        }
-
-        .feature-card {
-            background: var(--card-bg);
-            padding: 35px;
-            border-radius: 15px;
-            border: 1px solid #2e2f34;
-            transition: 0.3s;
-        }
-
-        .feature-card:hover { border-color: var(--primary-color); transform: translateY(-5px); }
-
-        .feature-card h3 { color: var(--primary-color); margin-top: 0; }
-        .feature-card p { color: var(--text-muted); font-size: 0.95rem; }
-
-        /* 頁尾 */
-        footer {
-            padding: 60px 10%;
-            border-top: 1px solid #2e2f34;
-            text-align: center;
-            color: var(--text-muted);
-        }
-
-        .footer-links { margin-bottom: 20px; }
-        .footer-links a { color: var(--text-muted); margin: 0 15px; text-decoration: none; font-size: 0.9rem; }
-        .footer-links a:hover { color: #fff; }
+        footer { text-align: center; padding: 40px; border-top: 1px solid #2e2f34; color: var(--muted); }
+        footer a { color: var(--muted); text-decoration: none; margin: 0 10px; }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo">Uy-bot</div>
-        <div class="nav-links">
-            <a href="#features">功能</a>
-            <a href="tos.html">條款</a>
-            <a href="privacy.html">隱私</a>
-        </div>
+        <a href="#" class="logo">Uy-bot</a>
+        <ul class="nav-links">
+            <li class="dropdown">
+                <a href="#features">功能介紹 ▼</a>
+                <div class="dropdown-content">
+                    <a href="#admin">🛡️ 伺服器管理</a>
+                    <a href="#giveaway">🎉 抽獎與計時</a>
+                    <a href="#minecraft">🎮 遊戲與通知</a>
+                    <a href="#voice">🔊 動態語音</a>
+                </div>
+            </li>
+            <li><a href="https://discord.gg/tm92hFYTjx" target="_blank">官方伺服器</a></li>
+        </ul>
     </nav>
 
     <section class="hero">
-        <h1>讓伺服器管理<br>變得更簡單</h1>
-        <p>Uy-bot 為您的 Discord 社群提供最穩定的管理工具、Minecraft 查詢系統與自動化功能，助您打造頂尖伺服器。</p>
-        <a href="https://discord.gg/tm92hFYTjx" class="btn-main" target="_blank">立即加入 Discord</a>
+        <h1>Uy-bot</h1>
+        <p>最強大的伺服器管理與 Minecraft 整合夥伴</p>
+        <a href="https://discord.gg/tm92hFYTjx" class="btn">立即邀請機器人</a>
     </section>
 
-    <section class="features" id="features">
-        <div class="feature-card">
-            <h3>🛡️ 專業管理</h3>
-            <p>自動化歡迎訊息、身分組管理與精準的審核工具，讓管理員事半功倍。</p>
+    <section id="admin" class="section">
+        <h2>🛡️ 伺服器管理</h2>
+        <div class="cmd-list">
+            <div class="cmd-box"><strong>/刪除頻道</strong><span>快速一鍵移除指定頻道。</span></div>
+            <div class="cmd-box"><strong>/刪除訊息</strong><span>批量清理頻道內的對話記錄。</span></div>
+            <div class="cmd-box"><strong>/機器人身分組</strong><span>設定與調整機器人的操作權限。</span></div>
+            <div class="cmd-box"><strong>/成員身分組</strong><span>管理伺服器成員的身分等級。</span></div>
         </div>
-        <div class="feature-card">
-            <h3>🎮 Minecraft 整合</h3>
-            <p>即時查詢伺服器狀態、在線人數與版本資訊，讓玩家隨時掌握動態。</p>
+    </section>
+
+    <section id="giveaway" class="section">
+        <h2>🎉 抽獎與計時</h2>
+        <div class="cmd-list">
+            <div class="cmd-box"><strong>/設定抽獎</strong><span>自定義獎品、時間與獲獎人數。</span></div>
+            <div class="cmd-box"><strong>/刪除抽獎</strong><span>強制結束或取消目前的活動。</span></div>
+            <div class="cmd-box"><strong>/設定計時器</strong><span>倒數提醒，適用於各類伺服器活動。</span></div>
+            <div class="cmd-box"><strong>/取消計時器</strong><span>終止進行中的倒數。</span></div>
+            <div class="cmd-box"><strong>/計時器列表</strong><span>查看所有正在運作的時鐘。</span></div>
         </div>
-        <div class="feature-card">
-            <h3>🎁 抽獎系統</h3>
-            <p>公平公正的抽獎機制，內建計時器與自動開獎，提升成員活躍度。</p>
+    </section>
+
+    <section id="minecraft" class="section">
+        <h2>🎮 遊戲與通知</h2>
+        <div class="cmd-list">
+            <div class="cmd-box"><strong>/查詢麥塊伺服器狀態</strong><span>即時獲取伺服器人數與版本資訊。</span></div>
+            <div class="cmd-box"><strong>/伺服器歡迎訊息</strong><span>自定義美觀的進場歡迎文案。</span></div>
+            <div class="cmd-box"><strong>/伺服器道別訊息</strong><span>溫馨的成員離去通知。</span></div>
+            <div class="cmd-box"><strong>/伺服器加成訊息</strong><span>專屬加成者的感謝語。</span></div>
         </div>
-        <div class="feature-card">
-            <h3>🔊 動態語音</h3>
-            <p>自動管理語音頻道，隨進隨開，人走即刪，保持頻道清爽不凌亂。</p>
+    </section>
+
+    <section id="voice" class="section">
+        <h2>🔊 動態語音</h2>
+        <div class="cmd-list">
+            <div class="cmd-box"><strong>/動態語音設定</strong><span>設定語音頻道的自動建立規則。</span></div>
+            <div class="cmd-box"><strong>/動態語音開啟</strong><span>正式啟用自動化語音功能。</span></div>
+            <div class="cmd-box"><strong>/動態語音關閉</strong><span>停用並回復手動管理。</span></div>
         </div>
-    </section
+    </section>
+
+    <footer>
+        <div style="margin-bottom: 20px;">
+            <a href="tos.html">服務條款</a>
+            <a href="privacy.html">隱私權政策</a>
+        </div>
+        <p>&copy; 2026 Uy-bot. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
