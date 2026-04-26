@@ -41,14 +41,12 @@
         }
 
         .logo-container { display: flex; align-items: center; text-decoration: none; }
-        /* 修正圖片路徑：確保檔名與你上傳到 GitHub 的檔案完全一致 */
         .logo-img { width: 40px; height: 40px; border-radius: 50%; margin-right: 12px; border: 2px solid var(--primary); object-fit: cover; }
         .logo-text { font-size: 1.4rem; font-weight: 800; color: var(--primary); }
 
         .nav-links { display: flex; list-style: none; gap: 30px; margin: 0; padding: 0; }
         .nav-links a { color: var(--text); text-decoration: none; font-weight: 500; transition: 0.3s; }
         
-        /* 下拉選單 */
         .dropdown { position: relative; }
         .dropdown-content {
             display: block;
@@ -71,7 +69,7 @@
             visibility: visible;
             transform: translateX(-50%) translateY(0);
         }
-        .dropdown-content a { padding: 12px 20px; display: block; font-size: 0.95rem; color: var(--muted) !important; }
+        .dropdown-content a { padding: 12px 20px; display: block; font-size: 0.95rem; color: var(--muted) !important; text-decoration: none; }
         .dropdown-content a:hover { background: #2e2f34; color: #fff !important; }
 
         /* 主視覺區 */
@@ -100,6 +98,7 @@
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
             box-shadow: 0 4px 15px rgba(88, 101, 242, 0.3);
             border: none;
+            cursor: pointer;
         }
         .btn-invite:hover { transform: scale(1.08) translateY(-5px); background-color: var(--primary-hover); box-shadow: 0 15px 35px rgba(88, 101, 242, 0.5); }
         .btn-invite:active { transform: scale(0.95) translateY(0); transition: all 0.1s; }
@@ -109,12 +108,14 @@
         .section h2 { font-size: 2.5rem; margin-bottom: 40px; border-left: 5px solid var(--primary); padding-left: 20px; }
         .cmd-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
         .cmd-card { background: var(--card); padding: 25px; border-radius: 16px; border: 1px solid #2e2f34; transition: 0.3s; }
-        .cmd-card:hover { transform: translateY(-8px); border-color: var(--primary); }
+        .cmd-card:hover { transform: translateY(-8px); border-color: var(--primary); background: #1e1f23; }
         .cmd-name { color: var(--primary); font-family: monospace; font-weight: 700; font-size: 1.1rem; display: block; margin-bottom: 10px; }
         .cmd-desc { color: var(--muted); font-size: 0.95rem; line-height: 1.5; }
 
         footer { text-align: center; padding: 80px 10%; border-top: 1px solid #2e2f34; color: var(--muted); }
+        .footer-links { margin-bottom: 20px; }
         .footer-links a { color: var(--muted); text-decoration: none; margin: 0 15px; }
+        .footer-links a:hover { color: #fff; }
     </style>
 </head>
 <body>
@@ -147,29 +148,40 @@
     <section id="admin" class="section">
         <h2>🛡️ 伺服器管理</h2>
         <div class="cmd-grid">
-            <div class="cmd-card"><span class="cmd-name">/刪除頻道</span><span class="cmd-desc">快速移除頻道。</span></div>
-            <div class="cmd-card"><span class="cmd-name">/刪除訊息</span><span class="cmd-desc">大量清理訊息。</span></div>
+            <div class="cmd-card"><span class="cmd-name">/刪除頻道</span><span class="cmd-desc">快速移除不需要的頻道，保持伺服器架構清爽。</span></div>
+            <div class="cmd-card"><span class="cmd-name">/刪除訊息</span><span class="cmd-desc">大量清理頻道歷史訊息，維持社群交流品質。</span></div>
+            <div class="cmd-card"><span class="cmd-name">/機器人身分組</span><span class="cmd-desc">設定與管理機器人在伺服器中的角色。</span></div>
+            <div class="cmd-card"><span class="cmd-name">/成員身分組</span><span class="cmd-desc">快速分配成員權限，簡化管理流程。</span></div>
         </div>
     </section>
 
     <section id="giveaway" class="section">
         <h2>🎉 抽獎與計時</h2>
         <div class="cmd-grid">
-            <div class="cmd-card"><span class="cmd-name">/設定抽獎</span><span class="cmd-desc">自動化抽獎活動。</span></div>
+            <div class="cmd-card"><span class="cmd-name">/設定抽獎</span><span class="cmd-desc">發起自動化抽獎活動，增加成員互動。</span></div>
+            <div class="cmd-card"><span class="cmd-name">/刪除抽獎</span><span class="cmd-desc">手動結束或強制停用目前的抽獎項目。</span></div>
+            <div class="cmd-card"><span class="cmd-name">/設定計時器</span><span class="cmd-desc">開啟自定義倒數提醒。</span></div>
+            <div class="cmd-card"><span class="cmd-name">/取消計時器</span><span class="cmd-desc">終止正在運行的計時任務。</span></div>
+            <div class="cmd-card"><span class="cmd-name">/計時器列表</span><span class="cmd-desc">查看伺服器中所有進行中的計時項目。</span></div>
         </div>
     </section>
 
     <section id="minecraft" class="section">
         <h2>🎮 遊戲與通知</h2>
         <div class="cmd-grid">
-            <div class="cmd-card"><span class="cmd-name">/查詢麥塊伺服器狀態</span><span class="cmd-desc">即時獲取伺服器資訊。</span></div>
+            <div class="cmd-card"><span class="cmd-name">/查詢麥塊伺服器狀態</span><span class="cmd-desc">即時獲取 Minecraft 伺服器延遲、人數與版本。</span></div>
+            <div class="cmd-card"><span class="cmd-name">/伺服器歡迎訊息</span><span class="cmd-desc">設定新成員加入時的專屬問候通知。</span></div>
+            <div class="cmd-card"><span class="cmd-name">/伺服器道別訊息</span><span class="cmd-desc">設定成員離開伺服器時的通知訊息。</span></div>
+            <div class="cmd-card"><span class="cmd-name">/伺服器加成訊息</span><span class="cmd-desc">當有人 Boost 伺服器時發出感謝。</span></div>
         </div>
     </section>
 
     <section id="voice" class="section">
         <h2>🔊 動態語音</h2>
         <div class="cmd-grid">
-            <div class="cmd-card"><span class="cmd-name">/動態語音設定</span><span class="cmd-desc">自動頻道生成設定。</span></div>
+            <div class="cmd-card"><span class="cmd-name">/動態語音設定</span><span class="cmd-desc">配置自動建立頻道時的分類與名稱規則。</span></div>
+            <div class="cmd-card"><span class="cmd-name">/動態語音開啟</span><span class="cmd-desc">正式啟動動態語音系統。</span></div>
+            <div class="cmd-card"><span class="cmd-name">/動態語音關閉</span><span class="cmd-desc">停用並恢復手動語音管理。</span></div>
         </div>
     </section>
 
@@ -182,6 +194,7 @@
     </footer>
 
     <script>
+        // 確保重新整理後回到最上方
         window.onbeforeunload = function () {
             window.scrollTo(0, 0);
         }
